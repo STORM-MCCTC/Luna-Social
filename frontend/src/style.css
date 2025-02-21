@@ -1,15 +1,100 @@
-.post_profile_image{
-    margin-right: 5px;
-    border-radius: 10px;
-    width: 50px;
-    height: auto;
-    display: inline-block;
+/* Global Styles */
+body {
+    background-color: #111111;
+    color: white;
+    font-family: Arial, sans-serif;
 }
-.post_top {
+
+/* Layout and Containers */
+.top_bar {
     display: flex;
-    align-items: center; 
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center;
+    position: relative; /* Allows absolute positioning for children */
+    padding: 10px;
+    width: 100%;
 }
-.post_main{
+
+
+.login_span {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    right: 10px;
+}
+
+/* Buttons */
+.top_bar_login{
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.top_bar_signup{
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.top_bar_post {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.top_bar_login {
+    background-color: #5c5ca2; /* Purple */
+}
+
+.top_bar_signup {
+    background-color: #808080; /* Gray */
+}
+
+.top_bar_post {
+    background-color: #5c5ca2; /* Purple */
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/* Button Hover Effects */
+.top_bar_login:hover {
+    background-color: #5a0c9e;
+}
+
+.top_bar_signup:hover {
+    background-color: #6e6e6e;
+}
+
+.top_bar_post:hover {
+    background-color: #5a0c9e;
+}
+
+/* Inputs */
+.post_input, 
+.imageupload {
+    background-color: #212121;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.post_input {
+    width: 300px;
+    padding: 5px;
+}
+
+/* Post Components */
+.post_main {
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
@@ -21,106 +106,38 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
-.post_id{
-    margin-left: 10px;
-    color: gray;
+
+.post_top {
+    display: flex;
+    align-items: center;
 }
-.post_footer_text{
-    margin-left: 10px;
-    color: gray;
+
+.post_profile_image {
+    margin-right: 5px;
+    border-radius: 10px;
+    width: 50px;
+    height: auto;
+    display: inline-block;
 }
-.post_body_image{
+
+.post_body_image {
     border-radius: 10px;
     width: 500px;
     height: auto;
 }
-body{
-    background-color: #111111;
-    color: white;
-    font-family: Arial, sans-serif;
-}
-.top_bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Align elements to left and right */
-    padding: 10px;
-    width: 100%;
+
+.post_id{
+    margin-left: 10px;
+    color: gray;
 }
 
-.top_bar_logo{
+.post_footer_text {
+    margin-left: 10px;
+    color: gray;
+}
+
+/* Logo */
+.top_bar_logo {
     height: 50px;
     width: auto;
-}
-.post_input{
-    width: 300px;
-    padding: 5px;
-}
-.top_bar_login {
-    background-color: #5c5ca2; /* Purple */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.top_bar_signup {
-    background-color: #808080; /* Gray */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* Optional hover effects */
-.top_bar_login:hover {
-    background-color: #5a0c9e;
-}
-
-.top_bar_signup:hover {
-    background-color: #6e6e6e;
-}
-
-.top_bar_post{
-    background-color: #5c5ca2; /* Purple */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.top_bar_post:hover{
-    background-color: #5a0c9e;
-}
-
-.post_input{
-    background-color: #212121;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-.imageupload{
-    background-color: #212121;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.login_span {
-    margin-left: auto; /* Push login/signup buttons to the right */
-    display: flex;
-    gap: 10px; /* Add space between buttons */
-    margin-right: 10px;
 }
