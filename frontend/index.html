@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline</title>
+    <link href="src/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="top_bar">
+        <a href="index.html"><img class="top_bar_logo" src="src/logo.png"></a>
+        <br>
+        <input class="post_input" id="postText" placeholder="What's on your mind?">
+        <button class="top_bar_post" onclick="addPost()">Post</button>
+        <input class="imageupload" type="file" id="imageUpload" accept="image/*">
+        <span class="login_span">
+            <a href="login.html"><button class="top_bar_login">Login</button></a>
+            <a href="signup.html"><button class="top_bar_signup" >signup</button></a>
+        </span>
+    </div>
+    <br>
+    <div id="postContainer"></div>
+
+    <script>
+        function addPost() {
+            const postText = document.getElementById("postText").value;
+            const imageInput = document.getElementById("imageUpload");
+            const postContainer = document.getElementById("postContainer");
+            
+            if (!postText.trim()) {
+                alert("Post cannot be empty");
+                return;
+            }
+            
+            const newPost = document.createElement("div");
+            newPost.classList.add("post_main");
+            
+            let imageUrl = "";
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imageUrl = e.target.result;
+                    newPost.innerHTML = `
+                        <span class="post_top">
+                            <img class="post_profile_image" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+                            <p class="post_user">Username</p>
+                            <p class="post_id">@UserID</p>
+                        </span>
+                        <span class="post_content">
+                            <p class="post_body_text">${postText}</p>
+                            <img class="post_body_image" src="${imageUrl}">
+                        </span>
+                        <span class="post_footer">
+                            <p class="post_footer_text">Just now</p>
+                        </span>`;
+                    postContainer.prepend(newPost);
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                newPost.innerHTML = `
+                    <span class="post_top">
+                        <img class="post_profile_image" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+                        <p class="post_user">Username</p>
+                        <p class="post_id">@UserID</p>
+                    </span>
+                    <span class="post_content">
+                        <p class="post_body_text">${postText}</p>
+                    </span>
+                    <span class="post_footer">
+                        <p class="post_footer_text">Just now</p>
+                    </span>`;
+                postContainer.prepend(newPost);
+            }
+            
+            document.getElementById("postText").value = "";
+            imageInput.value = "";
+        }
+    </script>
+</body>
+</html>
