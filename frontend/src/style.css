@@ -23,6 +23,31 @@ body {
     right: 10px;
 }
 
+.login_main{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #212121;
+    color: white;
+    width: 500px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.login_input{
+    background-color: #111111;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 /* Buttons */
 .top_bar_login{
     color: white;
@@ -30,6 +55,7 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    background-color: #5c5ca2;
 }
 
 .top_bar_signup{
@@ -38,6 +64,25 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    background-color: #808080;
+}
+
+.login_login{
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #5c5ca2
+}
+
+.login_signup{
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #808080
 }
 
 .top_bar_post {
@@ -46,14 +91,6 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.top_bar_login {
-    background-color: #5c5ca2; /* Purple */
-}
-
-.top_bar_signup {
-    background-color: #808080; /* Gray */
 }
 
 .top_bar_post {
@@ -71,12 +108,30 @@ body {
     background-color: #6e6e6e;
 }
 
+.login_login:hover {
+    background-color: #5a0c9e;
+}
+
+.login_signup:hover {
+    background-color: #6e6e6e;
+}
+
 .top_bar_post:hover {
     background-color: #5a0c9e;
 }
 
 /* Inputs */
-.post_input, 
+.post_input{
+    background-color: #212121;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .imageupload {
     background-color: #212121;
     color: white;
