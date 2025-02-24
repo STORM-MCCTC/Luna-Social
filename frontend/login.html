@@ -10,20 +10,109 @@
     <div class="top_bar">
         <a href="index.html"><img class="top_bar_logo" src="src/logo.png"></a>
     </div>
+    
+    <!-- Login/Signup Form -->
     <div class="login_main">
-        <br>
-        <br>
-        <input class="login_input" placeholder="Username or email">
-        <br>
-        <br>
-        <input class="login_input" placeholder="Password" type="password"> 
-        <br>
-        <br>
-        <br>
-        <span class="login_login_span">
-            <button class="login_login">Login</button>
-            <button class="login_signup">Signup</button>
-        </span>
+        <br><br>
+        
+        <!-- Form to handle login/signup -->
+        <div id="loginForm">
+            <input id="username" class="login_input" placeholder="Username or email">
+            <br><br>
+            <input id="password" class="login_input" placeholder="Password" type="password">
+            <br><br><br>
+            <span class="login_login_span">
+                <button class="login_login" onclick="login()">Login</button>
+                <button class="login_signup" onclick="toggleSignup()">Signup</button>
+            </span>
+        </div>
+
+        <!-- Signup form, initially hidden -->
+        <div id="signupForm" style="display: none;">
+            <input id="signupUsername" class="login_input" placeholder="Username">
+            <br><br>
+            <input id="signupEmail" class="login_input" placeholder="Email">
+            <br><br>
+            <input id="signupPassword" class="login_input" placeholder="Password" type="password">
+            <br><br><br>
+            <span class="login_login_span">
+                <button class="login_signup" onclick="signup()">Signup</button>
+                <button class="login_login" onclick="toggleSignup()">Back to Login</button>
+            </span>
+        </div>
     </div>
+
+    <script>
+        // Switch between login and signup forms
+        function toggleSignup() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+            } else {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+            }
+        }
+
+        // Login function
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            fetch('http://localhost:8000/login', {  // Replace with your backend URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Handle success (e.g., redirect to dashboard)
+                    alert('Login successful!');
+                    window.location.href = 'dashboard.html'; // Redirect to dashboard or home page
+                } else {
+                    // Handle failure (e.g., show error message)
+                    alert('Invalid credentials. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            });
+        }
+
+        // Signup function
+        function signup() {
+            const username = document.getElementById('signupUsername').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            fetch('http://localhost:8000/signup', {  // Replace with your backend URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, email, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Signup successful! You can now login.');
+                    toggleSignup();  // Switch back to the login form
+                } else {
+                    alert('Signup failed: ' + data.detail);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            });
+        }
+    </script>
 </body>
 </html>
