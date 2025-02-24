@@ -1,8 +1,0 @@
-TWITTER CLONE MVP
-
-built with FastAPI and Html, css, js
-
->Real time updating Timeline - Done
->User accounts (username, password, opitional email linking)
->User profile (bio, pfp, banner, ETC.)
->light and dark modes (dark by default)
