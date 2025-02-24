@@ -1,0 +1,143 @@
+@font-face {
+    font-family: 'OpenSauceOne-BlackItalic';
+    src: url('font/open-sauce-font/OpenSauceOne-BlackItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-Black';
+    src: url('font/open-sauce-font/OpenSauceOne-Black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-BoldItalic';
+    src: url('font/open-sauce-font/OpenSauceOne-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-Bold';
+    src: url('font/open-sauce-font/OpenSauceOne-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-ExtraBoldItalic';
+    src: url('font/open-sauce-font/OpenSauceOne-ExtraBoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-ExtraBold';
+    src: url('font/open-sauce-font/OpenSauceOne-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-Italic';
+    src: url('font/open-sauce-font/OpenSauceOne-Italic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-LightItalic';
+    src: url('font/open-sauce-font/OpenSauceOne-LightItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-Light';
+    src: url('font/open-sauce-font/OpenSauceOne-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-MediumItalic';
+    src: url('font/open-sauce-font/OpenSauceOne-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-Medium';
+    src: url('font/open-sauce-font/OpenSauceOne-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-Regular';
+    src: url('font/open-sauce-font/OpenSauceOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-SemiBoldItalic';
+    src: url('font/open-sauce-font/OpenSauceOne-SemiBoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceOne-SemiBold';
+    src: url('font/open-sauce-font/OpenSauceOne-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-BlackItalic';
+    src: url('font/open-sauce-font/OpenSauceSans-BlackItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-Black';
+    src: url('font/open-sauce-font/OpenSauceSans-Black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-BoldItalic';
+    src: url('font/open-sauce-font/OpenSauceSans-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-Bold';
+    src: url('font/open-sauce-font/OpenSauceSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-ExtraBoldItalic';
+    src: url('font/open-sauce-font/OpenSauceSans-ExtraBoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-ExtraBold';
+    src: url('font/open-sauce-font/OpenSauceSans-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-Italic';
+    src: url('font/open-sauce-font/OpenSauceSans-Italic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-LightItalic';
+    src: url('font/open-sauce-font/OpenSauceSans-LightItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-Light';
+    src: url('font/open-sauce-font/OpenSauceSans-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-MediumItalic';
+    src: url('font/open-sauce-font/OpenSauceSans-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-Medium';
+    src: url('font/open-sauce-font/OpenSauceSans-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-Regular';
+    src: url('font/open-sauce-font/OpenSauceSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-SemiBoldItalic';
+    src: url('font/open-sauce-font/OpenSauceSans-SemiBoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OpenSauceSans-SemiBold';
+    src: url('font/open-sauce-font/OpenSauceSans-SemiBold.ttf') format('truetype');
+}
+
+body {
+    font-family: 'OpenSauceSans-Regular', sans-serif;
+}
