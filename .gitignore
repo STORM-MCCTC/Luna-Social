@@ -3,3 +3,4 @@ backend/__pycache__
 Scope.txt
 backend/database.db
 backend/__pycache__/main.cpython-313.pyc
+backend/src/image/post_image/

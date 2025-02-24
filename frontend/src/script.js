@@ -28,24 +28,39 @@ function connectWebSocket() {
 connectWebSocket();
 
 // Function to add new posts
-function addPost() {
+async function addPost() {
     const postText = document.getElementById("postText").value;
     const imageInput = document.getElementById("imageUpload");
-    const postContainer = document.getElementById("postContainer");
-            
+    
     if (!postText.trim()) {
         alert("Post cannot be empty");
         return;
     }
-            
+
+    let imageUrl = null;
+
+    // Upload image if selected
+    if (imageInput.files.length > 0) {
+        const formData = new FormData();
+        formData.append("file", imageInput.files[0]);
+
+        const response = await fetch("http://127.0.0.1:8000/upload/", {
+            method: "POST",
+            body: formData,
+        });
+
+        const result = await response.json();
+        imageUrl = result.image_url;
+    }
+
     const newPost = {
         username: "Username",
         content: postText,
-        image_url: imageInput.files && imageInput.files[0] ? URL.createObjectURL(imageInput.files[0]) : null,
+        image_url: imageUrl,
         timestamp: new Date().toISOString()
     };
 
-    // Send post data to the backend via WebSocket
+    // Send post data via WebSocket
     websocket.send(JSON.stringify(newPost));
     displayPost(newPost);
 
@@ -53,25 +68,24 @@ function addPost() {
     imageInput.value = "";
 }
 
-// Display post in the frontend
 function displayPost(post) {
     const postContainer = document.getElementById("postContainer");
     const newPost = document.createElement("div");
     newPost.classList.add("post_main");
-            
+    
     newPost.innerHTML = `
         <span class="post_top">
             <img class="post_profile_image" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
             <p class="post_user">${post.username}</p>
             <p class="post_id">@UserID</p>
-            </span>
-            <span class="post_content">
-                <p class="post_body_text">${post.content}</p>
-                ${post.image_url ? `<img class="post_body_image" src="${post.image_url}">` : ""}
-            </span>
-            <span class="post_footer">
-                <p class="post_footer_text">${new Date(post.timestamp).toLocaleTimeString()}</p>
-            </span>`;
+        </span>
+        <span class="post_content">
+            <p class="post_body_text">${post.content}</p>
+            ${post.image_url ? `<img class="post_body_image" src="http://127.0.0.1:8000${post.image_url}">` : ""}
+        </span>
+        <span class="post_footer">
+            <p class="post_footer_text">${new Date(post.timestamp).toLocaleTimeString()}</p>
+        </span>`;
 
     postContainer.prepend(newPost);
 }

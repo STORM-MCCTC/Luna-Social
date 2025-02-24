@@ -1,21 +1,33 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+import os
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, Form, File, Depends
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 import json
 import sqlite3
 import datetime
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+import uuid
+import os
+from fastapi import UploadFile, File
 
 app = FastAPI()
 
-# Add CORS middleware to your FastAPI app
+# Mount the directory for serving images
+app.mount("/post_images", StaticFiles(directory="src/image/post_image"), name="post_images")
+
+# CORS Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for debugging
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Ensure the upload directory exists
+UPLOAD_DIR = "src/image/post_image"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # Database setup
 def get_db_connection():
@@ -23,7 +35,7 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-# Initialize the database (create the posts table if it doesn't exist)
+# Initialize the database
 def initialize_db():
     with get_db_connection() as conn:
         conn.execute("""
@@ -37,10 +49,9 @@ def initialize_db():
         """)
         conn.commit()
 
-# Call initialize_db() when the application starts
 initialize_db()
 
-# WebSocket manager
+# WebSocket Manager
 class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
@@ -48,16 +59,13 @@ class ConnectionManager:
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
         self.active_connections.append(websocket)
-        print(f"New WebSocket connection established. Total connections: {len(self.active_connections)}")
 
     def disconnect(self, websocket: WebSocket):
         self.active_connections.remove(websocket)
-        print(f"WebSocket connection closed. Total connections: {len(self.active_connections)}")
 
     async def broadcast(self, message: str):
         for connection in self.active_connections:
             await connection.send_text(message)
-        print(f"Broadcasted message: {message}")
 
 manager = ConnectionManager()
 
@@ -65,38 +73,42 @@ manager = ConnectionManager()
 class Post(BaseModel):
     username: str
     content: str
-    image_url: str = None
+    image_url: Optional[str] = None
     timestamp: str
 
+# WebSocket Endpoint
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
-    print("WebSocket connection attempt received")
     await manager.connect(websocket)
     try:
-        print("WebSocket connection established")
         with get_db_connection() as conn:
             posts = conn.execute("SELECT * FROM posts ORDER BY timestamp DESC LIMIT 20").fetchall()
             for post in reversed(posts):
                 await websocket.send_text(json.dumps(dict(post)))
-            print("Sent initial posts to client")
 
         while True:
             data = await websocket.receive_text()
-            print(f"Received data from client: {data}")
             post_data = json.loads(data)
             post_data["timestamp"] = datetime.datetime.now().isoformat()
-            
+
             with get_db_connection() as conn:
                 conn.execute("INSERT INTO posts (username, content, image_url, timestamp) VALUES (?, ?, ?, ?)",
                              (post_data["username"], post_data["content"], post_data.get("image_url"), post_data["timestamp"]))
                 conn.commit()
-            print(f"Inserted new post into database: {post_data}")
-            
+
             await manager.broadcast(json.dumps(post_data))
-            print(f"Broadcasted new post to all clients")
     except WebSocketDisconnect:
-        print("WebSocket connection closed by client")
         manager.disconnect(websocket)
-    except Exception as e:
-        print(f"WebSocket error: {e}")
-        manager.disconnect(websocket)
+
+@app.post("/upload/")
+async def upload_image(file: UploadFile = File(...)):
+    # Generate a unique filename using UUID
+    file_extension = os.path.splitext(file.filename)[1]  # Get the file extension
+    unique_filename = f"{uuid.uuid4().hex}{file_extension}"
+    file_location = f"src/image/post_image/{unique_filename}"
+
+    # Save the file
+    with open(file_location, "wb") as buffer:
+        buffer.write(file.file.read())
+
+    return {"image_url": f"/post_images/{unique_filename}"}
