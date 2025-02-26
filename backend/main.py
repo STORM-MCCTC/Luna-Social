@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, UploadFile, Form, File, Depends
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, UploadFile, File, Depends
 from pydantic import BaseModel
 from typing import List, Optional
 import json
@@ -9,6 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import uuid
 from passlib.context import CryptContext
+from fastapi.responses import JSONResponse
+from fastapi import Response
 
 # Password hashing context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -128,7 +130,7 @@ async def upload_image(file: UploadFile = File(...)):
 # User model for login/signup
 class User(BaseModel):
     username: str
-    email: str
+    email: Optional[str] = None
     password: str
 
 # Helper function to hash passwords
@@ -159,11 +161,28 @@ async def signup(user: User):
 
     return {"success": True, "message": "Signup successful!"}
 
+active_sessions = {}
+
 @app.post("/login")
-async def login(user: User):
-    # Check if the user exists in the database
-    stored_user = users_db.get(user.username)
-    if stored_user and pwd_context.verify(user.password, stored_user["password"]):
-        return {"success": True, "message": "Login successful!"}
-    else:
+async def login(user: User, response: Response):
+    with get_db_connection() as conn:
+        stored_user = conn.execute("SELECT * FROM users WHERE username = ?", (user.username,)).fetchone()
+        if stored_user and verify_password(user.password, stored_user["password"]):
+            # Generate a simple session token (UUID for now)
+            session_token = str(uuid.uuid4())
+
+            # Store the session token in memory (use a database for real applications)
+            active_sessions[session_token] = user.username
+
+            # Set a secure HTTP-only cookie
+            response.set_cookie(key="session_token", value=session_token, httponly=True, max_age=86400)
+
+            return {"success": True, "message": "Login successful!", "username": user.username}
+        
         raise HTTPException(status_code=401, detail="Invalid credentials")
+
+@app.get("/session")
+async def get_session_token(session_token: Optional[str] = None):
+    if session_token in active_sessions:
+        return {"username": active_sessions[session_token]}
+    raise HTTPException(status_code=401, detail="Not authenticated")
